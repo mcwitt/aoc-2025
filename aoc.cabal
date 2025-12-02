@@ -41,3 +41,7 @@ common solution
 executable d01
   import:  solution
   main-is: D01.hs
+
+executable d02
+  import:  solution
+  main-is: D02.hs
