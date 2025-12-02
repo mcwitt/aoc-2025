@@ -1,0 +1,43 @@
+cabal-version: 3.0
+name:          aoc
+version:       0.1.0.0
+license:       BSD-3-Clause
+license-file:  LICENSE
+author:        Matt Wittmann
+maintainer:    mcwitt@gmail.com
+build-type:    Simple
+
+common default-language
+  default-language: GHC2024
+
+common warnings
+  ghc-options: -Wall -Wno-missing-signatures -Wno-x-partial
+
+library
+  import:
+    warnings,
+    default-language
+
+  hs-source-dirs:  src
+  build-depends:   base ^>=4.20.2.0
+  exposed-modules:
+    Data.DivMod
+    Data.Mod
+
+common solution
+  import:
+    warnings,
+    default-language
+
+  build-depends:
+    , aoc
+    , base        ^>=4.20.2.0
+    , containers
+    , mtl
+    , vector
+
+  hs-source-dirs: app
+
+executable d01
+  import:  solution
+  main-is: D01.hs
