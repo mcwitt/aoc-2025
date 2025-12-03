@@ -19,11 +19,15 @@ library
     default-language
 
   hs-source-dirs:  src
-  build-depends:   base ^>=4.20.2.0
+  build-depends:
+    , base      ^>=4.20.2.0
+    , MemoTrie
+
   exposed-modules:
     AoC.Prelude
     Data.DivMod
     Data.Mod
+    Data.Nat
 
 common solution
   import:
@@ -34,6 +38,7 @@ common solution
     , aoc
     , base        ^>=4.20.2.0
     , containers
+    , MemoTrie
     , mtl
     , vector
 
@@ -46,3 +51,7 @@ executable d01
 executable d02
   import:  solution
   main-is: D02.hs
+
+executable d03
+  import:  solution
+  main-is: D03.hs
