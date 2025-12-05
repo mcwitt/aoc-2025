@@ -2,19 +2,19 @@ module Main where
 
 import AoC.Prelude
 import Control.Arrow ((&&&), (>>>))
+import Data.List (sortBy)
+import Data.Ord (comparing)
 import Text.ParserCombinators.ReadP
 
-range :: ReadP (Int, Int)
-range = (,) <$> readS_to_P reads <* char '-' <*> readS_to_P reads
-
-ranges = range `sepBy1` char '\n'
-
-ingredient :: ReadP Int
-ingredient = readS_to_P reads
-
-ingredients = ingredient `sepBy1` char '\n'
-
-parser = (,) <$> ranges <* char '\n' <*> ingredients <* char '\n'
+parser :: ReadP ([(Int, Int)], [Int])
+parser =
+  (,)
+    <$> (range `sepBy1` char '\n')
+    <* char '\n'
+    <*> (readS_to_P reads `sepBy1` char '\n')
+    <* char '\n'
+  where
+    range = (,) <$> readS_to_P reads <* char '-' <*> readS_to_P reads
 
 parse = unsafeParse parser
 
@@ -23,22 +23,13 @@ solve1 (ranges, ingredients) =
     filter (\ingredient -> any (\(a, b) -> a <= ingredient && ingredient <= b) ranges) $
       ingredients
 
-solve2 (ranges, _) = sum $ map (\(a, b) -> b - a + 1) $ foldl' merge [] ranges
-
-merge :: [(Int, Int)] -> (Int, Int) -> [(Int, Int)]
-merge [] r = [r]
-merge (r : rs) s = case mergeOverlapping r s of
-  Nothing -> r : merge rs s
-  Just r' -> merge rs r'
-
-mergeOverlapping :: (Int, Int) -> (Int, Int) -> Maybe (Int, Int)
-mergeOverlapping r@(a1, b1) s@(a2, b2)
-  | a1 <= a2 = go r s
-  | otherwise = go s r
+solve2 (ranges, _) = fst $ foldl' addRange (0, 0) (sortBy (comparing fst) ranges)
   where
-    go (a1, b1) (a2, b2)
-      | b1 < a2 = Nothing
-      | otherwise = Just (min a1 a2, max b1 b2)
+    addRange (size, bmax) (a, b) =
+      let bmax' = max (b + 1) bmax
+       in ( size + bmax' - max a bmax,
+            bmax'
+          )
 
 main :: IO ()
 main = interact (parse >>> (solve1 &&& solve2) >>> show)
