@@ -24,6 +24,9 @@ library
     , comonad
     , containers
     , MemoTrie
+    , mtl
+    , unordered-containers
+    , monoidal-containers
 
   exposed-modules:
     AoC.Prelude
@@ -42,6 +45,8 @@ common solution
     , containers
     , MemoTrie
     , mtl
+    , monoidal-containers
+    , unordered-containers
     , vector
 
   hs-source-dirs: app
@@ -69,3 +74,7 @@ executable d05
 executable d06
   import:  solution
   main-is: D06.hs
+
+executable d07
+  import:  solution
+  main-is: D07.hs
