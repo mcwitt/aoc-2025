@@ -78,3 +78,7 @@ executable d06
 executable d07
   import:  solution
   main-is: D07.hs
+
+executable d11
+  import:  solution
+  main-is: D11.hs
