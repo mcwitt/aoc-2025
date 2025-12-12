@@ -7,47 +7,45 @@ author:        Matt Wittmann
 maintainer:    mcwitt@gmail.com
 build-type:    Simple
 
-common default-language
+common shared
   default-language: GHC2024
-
-common warnings
-  ghc-options: -Wall -Wno-missing-signatures -Wno-x-partial
+  ghc-options:      -Wall -Wno-missing-signatures -Wno-x-partial
 
 library
-  import:
-    warnings,
-    default-language
-
+  import:          shared
   hs-source-dirs:  src
   build-depends:
-    , base        ^>=4.20.2.0
+    , base                  ^>=4.20.2.0
     , comonad
     , containers
     , MemoTrie
+    , monoidal-containers
     , mtl
     , unordered-containers
-    , monoidal-containers
+    , vector
 
   exposed-modules:
-    AoC.Prelude
+    Advent.Prelude
+    Advent.Solution.D01
+    Advent.Solution.D02
+    Advent.Solution.D03
+    Advent.Solution.D04
+    Advent.Solution.D05
+    Advent.Solution.D06
+    Advent.Solution.D07
+    Advent.Solution.D08
+    Advent.Solution.D09
+    Advent.Solution.D10
+    Advent.Solution.D11
+    Advent.Solution.D12
     Data.DivMod
     Data.Mod
 
 common solution
-  import:
-    warnings,
-    default-language
-
+  import:         shared
   build-depends:
     , aoc
-    , base        ^>=4.20.2.0
-    , comonad
-    , containers
-    , MemoTrie
-    , mtl
-    , monoidal-containers
-    , unordered-containers
-    , vector
+    , base  ^>=4.20.2.0
 
   hs-source-dirs: app
 
@@ -79,6 +77,22 @@ executable d07
   import:  solution
   main-is: D07.hs
 
+executable d08
+  import:  solution
+  main-is: D08.hs
+
+executable d09
+  import:  solution
+  main-is: D09.hs
+
+executable d10
+  import:  solution
+  main-is: D10.hs
+
 executable d11
   import:  solution
   main-is: D11.hs
+
+executable d12
+  import:  solution
+  main-is: D12.hs

@@ -1,4 +1,4 @@
-module AoC.Prelude (unsafeParse) where
+module Advent.Prelude (unsafeParse) where
 
 import Text.ParserCombinators.ReadP (ReadP)
 import Text.ParserCombinators.ReadP qualified as ReadP
