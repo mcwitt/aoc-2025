@@ -2,7 +2,6 @@ module Advent.Solution.D02 where
 
 import Advent.Prelude
 import Control.Arrow ((&&&), (>>>))
-import Data.List (nub)
 import Data.Maybe (listToMaybe, mapMaybe)
 import Text.ParserCombinators.ReadP
 
@@ -34,22 +33,10 @@ mkInvalid2 n =
     | let s = show n,
       let l = length s,
       l >= 2,
-      (_, q) <- nub (factors l),
+      q <- [1 .. l `div` 2],
       let c : cs = chunks q s,
       all (c ==) cs
     ]
-
-factors :: Int -> [(Int, Int)]
-factors = go 1
-  where
-    go m n =
-      case [ (d, q)
-           | d <- [2 .. floor (sqrt (fromIntegral n) :: Double)],
-             let (q, r) = n `quotRem` d,
-             r == 0
-           ] of
-        (d, q) : _ -> (d, q * m) : go (m * d) (n `div` d)
-        [] -> [(n, m)]
 
 chunks :: Int -> [a] -> [[a]]
 chunks _ [] = []
